@@ -1,5 +1,8 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+document.addEventListener("keydown",direction);
+let dir;
+let pause = false;
 
 let box = 400;
 
@@ -34,7 +37,9 @@ let posNelep = [];
 
 let bullet = [];
 
-let ship = {x:300, y:300, animX:0, animY:0};
+let ship = {x:canvas.width/2-25, y:canvas.height-70, animX:0, animY:0};
+
+let score = 0;
 
 canvas.addEventListener("mousemove", function(event){
     ship.x = event.offsetX-25;
@@ -57,25 +62,42 @@ function game(){
     requestAnimFrame(game);
 }
 
+function direction(event){                              //Нажатие клавиш
+    
+     if(event.keyCode == 32){
+       if ( pause == false ) {
+        pause = true;  
+       } else {
+        pause = false; 
+       }
+         
+     }else if(event.keyCode == 27){localStorage.clear();}  
+ } 
+
+
+  
+    
+
 
 function update() {
+    if ( pause == true ){
 timer++;
-if ( timer % 30 ==0 ) {
+if ( timer % 100 ==0 ) {
     posNelep.push({
-        x:Math.random() * canvas.width ,
+        x:Math.random() * (canvas.width-50)  ,
         y:-50, 
-        dx:Math.random() * 2 - 1, 
-        dy:Math.random() * 2 + 1, 
+        dx:0, 
+        dy:Math.random() * 1 + 0.2, 
         del:0,
        });
 }
 
-if ( timer % 30 ==0 ) {
+if ( timer % 100 ==0 ) {
     bullet.push({
         x:ship.x+10 ,
         y:ship.y, 
         dx:0, 
-        dy:-2.2, 
+        dy:-5.2, 
        });
 }
 
@@ -112,7 +134,7 @@ if ( posNelep[i].del == 1 ) {posNelep.splice(i, 1)}
 
 }
 }
-
+}
 
 function render() {
 
