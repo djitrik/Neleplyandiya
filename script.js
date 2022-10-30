@@ -89,6 +89,7 @@ btnNewGame.onclick = function(){
 
  btnСontinue.onclick = function(){ 
     DialogPaused.close(); 
+    pause = true; 
  }
 
 fonimg.onload = function () {
@@ -126,7 +127,7 @@ function direction(event){                              //Нажатие кла�
 function update() {
     if ( pause == true ){
 timer++;
-if ( timer % 100 ==0 ) {
+if ( timer % 2 ==0 ) {
     posNelep.push({
         x:Math.random() * (canvas.width-50)  ,
         y:-50, 
@@ -136,12 +137,12 @@ if ( timer % 100 ==0 ) {
        });
 }
 
-if ( timer % 100 ==0 ) {
+if ( timer % 1 ==0 ) {
     bullet.push({
         x:ship.x+10 ,
         y:ship.y, 
         dx:0, 
-        dy:-5.2, 
+        dy:-6.1, 
        });
 }
 
