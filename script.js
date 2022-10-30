@@ -55,7 +55,7 @@ canvas.addEventListener("mousemove", function(event){
 
 let timer = 0;
 
-
+DialogMenu.show();
 
 btnNewGame.onclick = function(){ 
     DialogMenu.close();
@@ -139,8 +139,8 @@ if ( timer % 2 ==0 ) {
 
 if ( timer % 1 ==0 ) {
     bullet.push({
-        x:ship.x+10 ,
-        y:ship.y, 
+        x:ship.x+15 ,
+        y:ship.y-15, 
         dx:0, 
         dy:-6.1, 
        });
@@ -164,7 +164,7 @@ if ( posNelep[i].y > canvas.height) {posNelep.splice(i, 1)};
 //if ( posNelep[i].y < 0 ) {posNelep[i].dy = -posNelep[i].dy};
 
 for ( j in bullet ) {
-    if (Math.abs(posNelep[i].x+25-bullet[j].x-15) < 50 && Math.abs(posNelep[i].y-bullet[j].y) < 25) {
+    if (Math.abs(posNelep[i].x+25-bullet[j].x) < 30 && Math.abs(posNelep[i].y-bullet[j].y) < 25) {
        
         
         posNelep[i].del = 1;
