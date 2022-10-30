@@ -39,8 +39,14 @@ let bullet = [];
 
 let ship = {x:canvas.width/2-25, y:canvas.height-70, animX:0, animY:0};
 
-let score = 0;
 
+let user = [];
+let thisUser = {
+ name: 'name',
+ score: 0,
+ LVL: 0,
+
+}
 canvas.addEventListener("mousemove", function(event){
     ship.x = event.offsetX-25;
     ship.y = event.offsetY-13;
@@ -50,8 +56,43 @@ canvas.addEventListener("mousemove", function(event){
 let timer = 0;
 
 
+
+btnNewGame.onclick = function(){ 
+    DialogMenu.close();
+    DialogUserName.show();
+
+}
+
+ btnExit.onclick = function(){ 
+    window.close();
+
+ }
+
+ btnGoGame.onclick = function(){ 
+    DialogUserName.close();
+    DialogMenu.close();
+    DialogGame.show();
+    DialogPaused.show();
+    
+ }
+
+  btnBackNewGame.onclick = function(){ 
+     DialogMenu.show();
+      DialogUserName.close();
+  }
+
+  btnBackGame.onclick = function(){ 
+    DialogMenu.show();
+     DialogUserName.close();
+     DialogGame.close();
+ }
+
+ btnСontinue.onclick = function(){ 
+    DialogPaused.close(); 
+ }
+
 fonimg.onload = function () {
-    game() 
+    game();
 }
 
 
@@ -66,9 +107,12 @@ function direction(event){                              //Нажатие кла�
     
      if(event.keyCode == 32){
        if ( pause == false ) {
-        pause = true;  
+        pause = true; 
+         
+        DialogPaused.close(); 
        } else {
         pause = false; 
+        DialogPaused.show();
        }
          
      }else if(event.keyCode == 27){localStorage.clear();}  

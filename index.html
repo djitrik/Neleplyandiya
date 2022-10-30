@@ -9,8 +9,65 @@
 </head>
 <body>
 
+    
+    
+    
 
-    <canvas class = "canvas" id = "game" >Элемент не поддерживается</canvas> 
+    <!-- <dialog> 
+        <label id="UserName">  </label>
+        <label id="UserScore">  </label>
+        <label id="UserLVL">  </label>
+    </dialog> -->
+
+
+<div>
+
+    <dialog class="DialogMenu" id="DialogMenu"> 
+        <button class="btnMenu" id="btnNewGame"> Новая игра </button>
+        <button class="btnMenu" id="btnLoadGame"> Загрузить игру </button>
+        <button class="btnMenu" id="btnSetings"> Настройки </button>
+        <button class="btnMenu" id="btnLeaderBoard"> Таблица лидеров </button>
+        <button class="btnMenu" id="btnExit"> Выход </button>
+    </dialog>
+
+</div>
+   
+
+   <div>
+    <dialog class="DialogUserName" id="DialogUserName"> 
+        <label class="btnMenu" for="">1</label>
+        <input class="btnMenu" type="text1">
+        <label class="btnMenu" for="">2</label>
+        <input class="btnMenu" type="text2">
+        <label class="btnMenu" for="">3</label>
+        <input class="btnMenu" type="text3">
+        <button class="btnMenu" id="btnGoGame"> Начать </button>
+        <button class="btnMenu" id="btnBackNewGame"> Назад </button>
+    </dialog>
+   </div>
+
+  
+
+  <div>
+    <dialog class="DialogGame" id="DialogGame" > 
+        <dialog class="DialogPaused" id="DialogPaused"> 
+            <label></label>
+            <label>Пауза</label>
+            <label>Пауза</label>
+            <label>Пауза</label>
+            <label >Нажми пробел чтобы продолжить</label>
+            <button class="btnGame" id="btnСontinue"> Продолжить </button>
+            <button class="btnGame" id="btnBackGame"> Выйти в меню </button>
+        </dialog>
+
+        <canvas class = "canvas" id = "game" >Элемент не поддерживается</canvas> 
+    </dialog>
+  </div>
+
+    
+
+
+   
     <script src = "script.js"></script>
 </body>
 </html>

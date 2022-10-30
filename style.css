@@ -2,9 +2,44 @@ canvas {
     display: block;
      cursor:none; 
     margin:  auto;
-    
+    padding: 0%;
+    border: 0%;
+    margin-top: 10px;
 }
 
 body {
     background: rgba(0, 0, 0, 0.95);
+}
+
+.btnMenu {
+    display:block;
+    margin: auto;
+    margin-top: 10px;
+    width: 100px;
+    height: 50px;
+}
+
+.DialogMenu {
+    display:block;
+    margin: auto;
+    width: 480px;
+    height: 640px; 
+}
+
+.DialogGame {  
+    width: 480px;
+    height: 640px;   
+}
+
+.DialogUserName {  
+    margin: auto;
+    width: 480px;
+    height: 640px; 
+}
+
+.DialogPaused {
+    margin: auto;
+    margin-top: 200px;
+    width: 100px;
+    height: 200px; 
 }
