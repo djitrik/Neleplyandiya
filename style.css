@@ -1,0 +1,10 @@
+canvas {
+    display: block;
+     cursor:none; 
+    margin:  auto;
+    
+}
+
+body {
+    background: rgba(0, 0, 0, 0.95);
+}
