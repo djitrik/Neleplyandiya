@@ -39,12 +39,16 @@ let bullet = [];
 
 let ship = {x:canvas.width/2-25, y:canvas.height-70, animX:0, animY:0};
 
+let lvlUP = 0;
+
 
 let user = [];
+
 let thisUser = {
  name: 'name',
+ password: 'password',
  score: 0,
- LVL: 0,
+ LVL: 1,
 
 }
 canvas.addEventListener("mousemove", function(event){
@@ -53,44 +57,76 @@ canvas.addEventListener("mousemove", function(event){
 });
 
 
+
 let timer = 0;
 
 DialogMenu.show();
 
-btnNewGame.onclick = function(){ 
-    DialogMenu.close();
-    DialogUserName.show();
-
-}
-
- btnExit.onclick = function(){ 
-    window.close();
-
- }
-
- btnGoGame.onclick = function(){ 
-    DialogUserName.close();
-    DialogMenu.close();
-    DialogGame.show();
-    DialogPaused.show();
+function btnbtn() {
+    btnNewGame.onclick = function(){ 
+        DialogMenu.close();
+        DialogUserName.show();
     
- }
+    }
+    
+     btnExit.onclick = function(){ 
+        window.close();
+    
+     }
+    
+     btnGoGame.onclick = function(){ 
+        if ( btnUserNameinput.value !== '' && btnUserPasswordinput.value !== '' ) {
 
-  btnBackNewGame.onclick = function(){ 
-     DialogMenu.show();
-      DialogUserName.close();
-  }
+            thisUser.name = btnUserNameinput.value;
+            document.getElementById('UserName').innerHTML = thisUser.name;
+            thisUser.password = btnUserPasswordinput.value;
 
-  btnBackGame.onclick = function(){ 
-    DialogMenu.show();
-     DialogUserName.close();
-     DialogGame.close();
- }
 
- btnСontinue.onclick = function(){ 
-    DialogPaused.close(); 
-    pause = true; 
- }
+            DialogUserName.close();
+            DialogMenu.close();
+            DialogGame.show();
+            DialogPaused.show();
+            DialogInGame.show();
+
+            
+
+        } else {document.getElementById('btnGoGame').innerHTML = 'Введи свое имя!';}
+
+        
+        
+     }
+    
+      btnBackNewGame.onclick = function(){ 
+         DialogMenu.show();
+          DialogUserName.close();
+      }
+    
+      btnBackGame.onclick = function(){ 
+        DialogMenu.show();
+         DialogUserName.close();
+         DialogGame.close();
+     }
+    
+     btnСontinue.onclick = function(){ 
+        DialogPaused.close(); 
+        pause = true; 
+     }
+     
+     btnMenuСontinue.onclick = function(){ 
+        DialogPaused.show(); 
+        DialogUserName.close();
+        DialogMenu.close();
+        DialogGame.show(); 
+        pause = false; 
+     } 
+
+     
+     btnSave.onclick = function() {
+        DialogGameOver.show();
+
+
+     }
+}
 
 fonimg.onload = function () {
     game();
@@ -102,6 +138,7 @@ function game(){
     update();
     render();
     requestAnimFrame(game);
+    btnbtn();
 }
 
 function direction(event){                              //Нажатие клавиш
@@ -126,18 +163,24 @@ function direction(event){                              //Нажатие кла�
 
 function update() {
     if ( pause == true ){
+       // document.getElementById('labelPlayer').innerHTML = `Игрок: ${inputNewGame.value}`;
 timer++;
-if ( timer % 2 ==0 ) {
+
+if ( timer % 1000 ==0 ) {
+   lvlUP++;
+}
+if ( timer % 100 ==0 ) {
+    
     posNelep.push({
         x:Math.random() * (canvas.width-50)  ,
         y:-50, 
         dx:0, 
-        dy:Math.random() * 1 + 0.2, 
+        dy:Math.random() * lvlUP + 1, 
         del:0,
        });
 }
 
-if ( timer % 1 ==0 ) {
+if ( timer % 50 ==0 ) {
     bullet.push({
         x:ship.x+15 ,
         y:ship.y-15, 
@@ -160,20 +203,24 @@ posNelep[i].y = posNelep[i].y + posNelep[i].dy;
 //границы
 if ( posNelep[i].x+50 > canvas.width || posNelep[i].x < 0)  {posNelep[i].dx = -posNelep[i].dx};
 //if ( posNelep[i].x < 0 ) {posNelep[i].dx = -posNelep[i].dx};
-if ( posNelep[i].y > canvas.height) {posNelep.splice(i, 1)};
+if ( posNelep[i].y > canvas.height) {
+
+    posNelep.splice(i, 1);
+};
 //if ( posNelep[i].y < 0 ) {posNelep[i].dy = -posNelep[i].dy};
 
 for ( j in bullet ) {
-    if (Math.abs(posNelep[i].x+25-bullet[j].x) < 30 && Math.abs(posNelep[i].y-bullet[j].y) < 25) {
-       
+    if (Math.abs(posNelep[i].x-bullet[j].x) < 30 && Math.abs(posNelep[i].y-bullet[j].y) < 25) {
         
+        thisUser.score++;
+        console.log(thisUser.score);
+        document.getElementById('UserScore').innerHTML = `Score: ${thisUser.score}`;
         posNelep[i].del = 1;
-        bullet.splice(j, 1); break;
-
+        bullet.splice(j, 1); 
+        break;       
     }
-
-
 }
+
 if ( posNelep[i].del == 1 ) {posNelep.splice(i, 1)}
 
 
@@ -184,7 +231,9 @@ if ( posNelep[i].del == 1 ) {posNelep.splice(i, 1)}
 function render() {
 
     ctx.drawImage(fonimg, 0, 0, canvas.width, canvas.height);
-    ctx.drawImage(shipImg, ship.x, ship.y, 50, 50);
+    if ( pause ) {ctx.drawImage(shipImg, ship.x, ship.y, 50, 50);
+    }else{/* Добавить картинку для обычного курсора или восстановить видимость дефолтного курсора */}
+    
 
     for ( i in  bullet) {
         ctx.drawImage(bulletImg, bullet[i].x, bullet[i].y, 20, 20);
