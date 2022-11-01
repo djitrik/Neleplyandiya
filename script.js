@@ -166,26 +166,26 @@ function update() {
        // document.getElementById('labelPlayer').innerHTML = `Игрок: ${inputNewGame.value}`;
 timer++;
 
-if ( timer % 1000 ==0 ) {
+if ( timer % 100 == 0 ) {
    lvlUP++;
 }
-if ( timer % 100 ==0 ) {
-    
+if ( timer % (100 - lvlUP)  == 0 ) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
+    console.log(timer, lvlUP);
     posNelep.push({
-        x:Math.random() * (canvas.width-50)  ,
+        x:Math.floor(Math.random() * (canvas.width-50))  ,
         y:-50, 
         dx:0, 
-        dy:Math.random() * lvlUP + 1, 
+        dy:Math.random() * lvlUP/10 + 2, 
         del:0,
        });
 }
 
-if ( timer % 50 ==0 ) {
+if ( timer % 50 == 0 ) {
     bullet.push({
         x:ship.x+15 ,
         y:ship.y-15, 
         dx:0, 
-        dy:-6.1, 
+        dy:-3, 
        });
 }
 
@@ -200,20 +200,24 @@ for ( i in  posNelep) {
 
 posNelep[i].x = posNelep[i].x + posNelep[i].dx;
 posNelep[i].y = posNelep[i].y + posNelep[i].dy;
-//границы
+//границы 
 if ( posNelep[i].x+50 > canvas.width || posNelep[i].x < 0)  {posNelep[i].dx = -posNelep[i].dx};
 //if ( posNelep[i].x < 0 ) {posNelep[i].dx = -posNelep[i].dx};
-if ( posNelep[i].y > canvas.height) {
 
-    posNelep.splice(i, 1);
-};
+//if ( posNelep[i].y > canvas.height) {posNelep.splice(i, 1);};
 //if ( posNelep[i].y < 0 ) {posNelep[i].dy = -posNelep[i].dy};
 
 for ( j in bullet ) {
-    if (Math.abs(posNelep[i].x-bullet[j].x) < 30 && Math.abs(posNelep[i].y-bullet[j].y) < 25) {
+        // console.log(`posNelep[i] ${posNelep[i].x} : ${posNelep[i].y}`);
+        // console.log(`bullet[j] ${bullet[j].x} : ${bullet[j].y}`);
+    if (Math.abs(posNelep[i].x-bullet[j].x) < 49 
+        && Math.abs(posNelep[i].y-bullet[j].y) < 25) {
+        // console.log(`posNelep[i] ${posNelep[i].x} : ${posNelep[i].y}`);
+        // console.log(`bullet[j] ${bullet[j].x} : ${bullet[j].y}`);
         
+
         thisUser.score++;
-        console.log(thisUser.score);
+       // console.log(thisUser.score);
         document.getElementById('UserScore').innerHTML = `Score: ${thisUser.score}`;
         posNelep[i].del = 1;
         bullet.splice(j, 1); 
@@ -221,7 +225,7 @@ for ( j in bullet ) {
     }
 }
 
-if ( posNelep[i].del == 1 ) {posNelep.splice(i, 1)}
+if ( posNelep[i].del == 1 || posNelep[i].y > canvas.height) {posNelep.splice(i, 1)}
 
 
 }
