@@ -9,16 +9,6 @@
 </head>
 <body>
 
-
-    <div>
-        <dialog class="DialogGameOver"> 
-            <label id="labelPidor"> Ты накосячил, либо плати, либо начинай с начала </label>
-            <button class="btnMenu" id="btnGameOverСontinue"> Ладно, я остался без зарплаты </button>
-            <button class="btnMenu" id="btnGameOverNewGame"> Да пошел ты на хер </button>
-        </dialog>
-    </div>
-
-
     <div>
         <dialog class="DialogInGame"> 
             <label id="UserName"> Имя </label>
@@ -39,7 +29,7 @@
                 <button class="btnMenu" id="btnLeaderBoard"> Таблица лидеров </button>
                 <button class="btnMenu" id="btnExit"> Выход </button>
                 <button class="btnMenu" id="asasdasdasd"> 31.10.2022 </button>
-                <button class="btnMenu" id="asasdasdasd"> 3 дня 0 пропусков </button>
+               
             </div>
         </dialog>
     </div>
@@ -71,6 +61,80 @@
             </dialog>
 
             <canvas class = "canvas" id = "game" >Элемент не поддерживается</canvas> 
+        </dialog>
+    </div>
+    <div>
+        <dialog class="DialogChekGameSetings" id="DialogChekGameSetings">
+
+            <label id="labelSetingInGame"> Боковое меню </label>
+            <br>
+            <label  class="DialogChekLabel"> Корабль </label>
+            <br>
+            <label>Высота:</label>
+            <input class="DialogChek" id="ParamHeightShip" autocomplete="off">
+            <br>
+            <label>Ширина:</label>
+            <input class="DialogChek" id="ParamWidthShip"  autocomplete="off">
+            <br>
+            <label>Жизни:</label>
+            <input class="DialogChek" id="ParamHPShip" autocomplete="off">
+            <br>
+            <label>Щит:</label>
+            <input class="DialogChek" id="ParamSheetShip" autocomplete="off">
+            <br>
+            <label>Регенерация:</label>
+            <input class="DialogChek" id="ParamHPsecShip" autocomplete="off">
+            <br>
+            <label>Кол-во пуль:</label>
+            <input class="DialogChek" id="ParamBulletKShip" autocomplete="off">
+            <br>
+            <label>Скорострельность: </label>
+            <input class="DialogChek" id="ParamSpeedAttackShip" autocomplete="off">
+            <br>
+            <label  class="DialogChekLabel" >Пуля</label>
+            <br>
+            <label> Высота: </label>
+            <input class="DialogChek" id="ParamHeightBullet" autocomplete="off">
+            <br>
+            <label> Ширина: </label>
+            <input class="DialogChek" id="ParamWidthBullet" autocomplete="off">
+            <br>
+            <label> Скорость: </label>
+            <input class="DialogChek" id="ParamSpeedBullet" autocomplete="off">
+            <br>
+            <label> Урон: </label>
+            <input class="DialogChek" id="ParamDamageBullet" autocomplete="off">
+            <br>
+            <label class="DialogChekLabel"> Нелепые </label>
+            <br>
+            <label> Высота: </label>
+            <input class="DialogChek" id="ParamHeightNelep" autocomplete="off">
+            <br>
+            <label> Ширина: </label>
+            <input class="DialogChek" id="ParamWidthNelep" autocomplete="off">
+            <br>
+            <label> Жизни: </label>
+            <input class="DialogChek" id="ParamHPNelep" autocomplete="off">
+            <br>
+            <label> Урон: </label>
+            <input class="DialogChek" id="ParamDamageNelep" autocomplete="off">
+            <br>
+            <label> Скорость: </label>
+            <input class="DialogChek" id="ParamSpeedNelep" autocomplete="off">
+            <br>
+            <label> Кол-во: </label>
+            <input class="DialogChek" id="ParamKOLNelep" autocomplete="off">
+            <br>
+          
+            <button  id="kk"> Применить </button>
+        </dialog>
+    </div>
+
+    <div>
+        <dialog class="DialogGameOver" id="DialogGameOver"> 
+            <label id="labelPidor"> Ты накосячил, либо плати, либо начинай с начала </label>
+            <button class="btnMenu" id="btnGameOverСontinue"> Ладно, я остался без зарплаты </button>
+            <button class="btnMenu" id="btnGameOverNewGame"> Да пошел ты на хер </button>
         </dialog>
     </div>
 

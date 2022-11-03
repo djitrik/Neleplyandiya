@@ -155,5 +155,72 @@ canvas {
     width: 100px;
     height: 200px; 
     background: rgba(0, 0, 0);
+   
+}
+.DialogChekGameSetings {  
+    width: 200px;
+   
+    
+    background-color: rgb(44, 44, 44);  
+    margin-top: 0px;
+    margin-left: 0px;
+    min-height: 100px;
+}
+
+.DialogChek {
+
+    /* display:block; */
+    
+    margin-top: 10px;
+    /* margin-bottom: 10px; */
+    width: 30px;
+    height: 20px;
+    border-radius: 20px;
+    background-color: rgba(26, 115, 123, 0.993);
+    font-size: 90%; 
+    padding-left: 10px;
+    
+    
+}
+
+.DialogChekLabel {
+      display:block; 
+    
+     margin-top: 30px;
+     /* margin-bottom: 10px; */
+     width: 70%;
+     height: 20px;
+     border-radius: 20px;
+     background-color: rgba(26, 115, 123, 0.993);
+     font-size: 90%; 
+     padding-left: 70px;
+}
+
+#kk{
     display:block;
+    
+    margin-top: 10px;
+    /* margin-bottom: 10px; */
+    width: 100%;
+    height: 30px;
+    border-radius: 20px;
+    background-color: rgba(26, 115, 123, 0.993);
+    font-size: 90%; 
+    padding-left: 5px;  
+}
+
+#kk:hover{
+    box-shadow:         0 0 20px #22a2b9;
+    -moz-box-shadow:    0 0 20px #22a2b9;
+    -o-box-shadow:      0 0 20px #22a2b9;
+    -ms-box-shadow:     0 0 20px #22a2b9;
+    -webkit-box-shadow: 0 0 20px #22a2b9; 
+}
+
+.DialogChek:hover {
+    box-shadow:         0 0 20px #22a2b9;
+    -moz-box-shadow:    0 0 20px #22a2b9;
+    -o-box-shadow:      0 0 20px #22a2b9;
+    -ms-box-shadow:     0 0 20px #22a2b9;
+    -webkit-box-shadow: 0 0 20px #22a2b9; 
 }
