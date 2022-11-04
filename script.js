@@ -38,25 +38,31 @@ let nelepNumber = Math.floor(Math.random() * 4);
 let posNelep = [];
 let widthNelep = 50;
 let heightNelep = 50;
+let hpNelep = 0;
+let damageNelep = 0;
+let kolvoNelep = 0;
+let speedNelep = 1;
 
 let bullet = [];
 let widthBullet = 10;
 let heightBullet = 10;
+let speedBullet = 0;
+let damageBullet = 0;
 
 let widthShip = 40;
 let heightShip = 40;
 let ship = {
-    x:canvas.width / 2 - widthShip / 2,
-    y:canvas.height - heightShip - 20,
-    animX:0,
-    animY:0,
-    w: widthShip, //ширина корабля
-    h: heightShip, //высота корабля
-    hp: 0,
-    sheet: 0,
-    hpsec: 0,
-    bulletK: 0,
-    bulletSpeed: 0,
+  x:canvas.width / 2 - widthShip / 2,
+  y:canvas.height - heightShip - 20,
+  animX:0,
+  animY:0,
+  w: widthShip, //ширина корабля
+  h: heightShip, //высота корабля
+  hp: 0,
+  sheet: 0,
+  hpsec: 0,
+  bulletK: 0,
+  bulletSpeed: 0,
 };
 
 let lvlUP = 0;
@@ -77,8 +83,8 @@ let thisUser = {
 }
 
 canvas.addEventListener("mousemove", function(event){
-    ship.x = event.offsetX - widthShip / 2;
-    ship.y = event.offsetY - heightShip / 2;
+  ship.x = event.offsetX - widthShip / 2;
+  ship.y = event.offsetY - heightShip / 2;
 });
 
 
@@ -87,227 +93,272 @@ let timer = 0;
 
 DialogMenu.show();
 
+
+function newGame(){
+
+  thisUser.score = 0;
+  document.getElementById('UserScore').innerHTML = `Score: ${thisUser.score}`;
+  bullet.length = 0;
+  posNelep.length = 0;
+       
+
+}
+
+function straf(){
+
+  thisUser.score = thisUser.score - 10; //Изменить на переменную
+
+  document.getElementById('UserScore').innerHTML = `Score: ${thisUser.score}`;
+
+  bullet.length = 0;
+  posNelep.length = 0;
+}
+
+function activParam() {
+document.getElementById('ParamHeightShip').value = ship.h;
+document.getElementById('ParamWidthShip').value = ship.w;
+document.getElementById('ParamHPShip').value = ship.hp;
+document.getElementById('ParamSheetShip').value = ship.sheet;
+document.getElementById('ParamHPsecShip').value = ship.hpsec;
+document.getElementById('ParamBulletKShip').value = ship.bulletK;
+document.getElementById('ParamSpeedAttackShip').value = ship.bulletSpeed;
+document.getElementById('ParamHeightBullet').value = heightBullet;
+document.getElementById('ParamWidthBullet').value = widthBullet;   
+document.getElementById('ParamSpeedBullet').value = speedBullet;
+document.getElementById('ParamDamageBullet').value = damageBullet;
+document.getElementById('ParamHeightNelep').value = heightNelep;
+document.getElementById('ParamWidthNelep').value = widthNelep;
+document.getElementById('ParamHPNelep').value = hpNelep;
+document.getElementById('ParamDamageNelep').value = damageNelep;
+document.getElementById('ParamSpeedNelep').value = speedNelep;
+document.getElementById('ParamKOLNelep').value = kolvoNelep;
+}
+
 function btnbtn() {
 
-    kk.onclick = () => {
-        ship.h = document.getElementById('ParamHeightShip').value;
-        ship.w = document.getElementById('ParamWidthShip').value;
-        ship.hp =  document.getElementById('ParamHPShip').value;
-        ship.sheet =  document.getElementById('ParamSheetShip').value;
-        ship.hpsec =  document.getElementById('ParamHPsecShip').value;
-        ship.bulletK =  document.getElementById('ParamBulletKShip').value;
-        ship.bulletSpeed =  document.getElementById('ParamSpeedAttackShip').value;
-        
-        bullet.h = document.getElementById('ParamHeightBullet').value;
-        bullet.w = document.getElementById('ParamWidthBullet').value;   
-        bullet.dy = document.getElementById('ParamSpeedBullet').value;
-        bullet.damage = document.getElementById('ParamDamageBullet').value;
-//Включить после добавления объекта Нелепых
-        // posNelep.h = document.getElementById('ParamHeightNelep').value;
-        // posNelep.w = document.getElementById('ParamWidthNelep').value;
-        // posNelep.hp = document.getElementById('ParamHPNelep').value;
-        // posNelep.damage = document.getElementById('ParamDamageNelep').value;
-        // posNelep.dy = document.getElementById('ParamSpeedNelep').value;
-        // posNelep.h = document.getElementById('ParamKOLNelep').value;
+  kk.onclick = () => {
 
-
-    }
-
-    btnNewGame.onclick = () => {
-        DialogMenu.close(), 
-        DialogUserName.show()
-    }
+    ship.h  =           document.getElementById('ParamHeightShip').value;
+    ship.w =            document.getElementById('ParamWidthShip').value;
+    ship.hp =           document.getElementById('ParamHPShip').value;
+    ship.sheet =        document.getElementById('ParamSheetShip').value;
+    ship.hpsec =        document.getElementById('ParamHPsecShip').value;
+    ship.bulletK =      document.getElementById('ParamBulletKShip').value;
+    ship.bulletSpeed =  document.getElementById('ParamSpeedAttackShip').value;
     
-    btnExit.onclick = () => {window.close()}
-    
-    btnGoGame.onclick = () => { 
-        if ( btnUserNameinput.value !== '' && btnUserPasswordinput.value !== '' ) {
+    bullet.h =          document.getElementById('ParamHeightBullet').value;
+    bullet.w =          document.getElementById('ParamWidthBullet').value;   
+    bullet.dy =         document.getElementById('ParamSpeedBullet').value;
+    bullet.damage =     document.getElementById('ParamDamageBullet').value;
 
-            thisUser.name = btnUserNameinput.value;
-            document.getElementById('UserName').innerHTML = thisUser.name;
-            thisUser.password = btnUserPasswordinput.value;
+    heightNelep =       document.getElementById('ParamHeightNelep').value;
+    widthNelep =        document.getElementById('ParamWidthNelep').value;
+    hpNelep =           document.getElementById('ParamHPNelep').value;
+    damageNelep =       document.getElementById('ParamDamageNelep').value;
+    speedNelep =        document.getElementById('ParamSpeedNelep').value;
+    kolvoNelep =        document.getElementById('ParamKOLNelep').value;
 
-            DialogUserName.close();
-            DialogMenu.close();
-            DialogGame.show();
-            DialogPaused.show();
-            DialogInGame.show();
 
-        } else {document.getElementById('btnGoGame').innerHTML = 'Введи свое имя!'}   
     }
+
+  btnNewGame.onclick = () => {
+    DialogMenu.close(), 
+    DialogUserName.show()
+  }
     
-    btnBackNewGame.onclick = () => { DialogMenu.show(), DialogUserName.close() }   
-    btnBackGame.onclick = () => { 
-        DialogMenu.show(), 
-        DialogUserName.close(), 
-        DialogGame.close() 
-    }
+  btnExit.onclick = () => {window.close()}
+    
+  btnGoGame.onclick = () => { 
+    if ( btnUserNameinput.value !== '' && btnUserPasswordinput.value !== '' ) {
+
+      thisUser.name = btnUserNameinput.value;
+      document.getElementById('UserName').innerHTML = thisUser.name;
+      thisUser.password = btnUserPasswordinput.value;
+
+      DialogUserName.close();
+      DialogMenu.close();
+      DialogGame.show();
+      DialogPaused.show();
+      DialogInGame.show();
+
+    } else {document.getElementById('btnGoGame').innerHTML = 'Введи свое имя!'}   
+  }
+    
+  btnBackNewGame.onclick = () => { DialogMenu.show(), DialogUserName.close() }   
+  btnBackGame.onclick = () => { 
+    DialogMenu.show(), 
+    DialogUserName.close(), 
+    DialogGame.close() 
+  }
    
-    btnСontinue.onclick = () => {
-        DialogPaused.close(),
-         pause = true 
-    }  
+  btnСontinue.onclick = () => {
+    DialogPaused.close(),
+      pause = true 
+  }  
 
-    btnMenuСontinue.onclick = () => { 
-        DialogPaused.show(), 
-        DialogUserName.close(),
-        DialogMenu.close(),
-        DialogGame.show(), 
-        pause = false
-    } 
+  btnMenuСontinue.onclick = () => { 
+    DialogPaused.show(), 
+    DialogUserName.close(),
+    DialogMenu.close(),
+    DialogGame.show(), 
+    pause = false
+  } 
 
      
-     btnSave.onclick = () => {
-        DialogGameOver.show();
+  btnSave.onclick = () => {
+    DialogGameOver.show();
 
 
-     }
+  }
+
+  btnGameOverСontinue.onclick = () => {
+    DialogGameOver.close();
+    straf()
+
+  }
+
+  btnGameOverNewGame.onclick = () => {
+    DialogGameOver.close();
+    newGame();
+  }
+
+
 }
 
-fonimg.onload = () => {
-    game();
-}
-
-
+fonimg.onload = () => {game()}
 
 function game(){
-    update();
-    render();
-    requestAnimFrame(game);
-    btnbtn();
+  update();
+  render();
+  requestAnimFrame(game);
+  btnbtn();
 }
 
 function direction(event){                              //Нажатие клавиш
    
-
-     if(event.keyCode == 32 /* Добавить проверку на нахождении в диалоге с игрой */){
-       if ( pause == false ) {
-        pause = true; 
-         
-        DialogPaused.close(); 
-       } else {
-        pause = false; 
-        DialogPaused.show();
-       }
-         
-     }else if(event.keyCode == 27){
-        if ( ESCkeyClick == false ) {
-            ESCkeyClick = true ;
-            DialogChekGameSetings.show();
-           
-        } else { 
-            ESCkeyClick = false ;
-            DialogChekGameSetings.close();
-        }
-        
+  if(event.keyCode == 32 /* Добавить проверку на нахождении в диалоге с игрой */){
+    if ( pause == false ) {
+      pause = true;  
+      DialogPaused.close(); 
+    } else {
+      pause = false; 
+      DialogPaused.show();
+    }        
+    }else if(event.keyCode == 27){
+    if ( ESCkeyClick == false ) {
+      ESCkeyClick = true ;
+      DialogChekGameSetings.show();  
+      activParam()    
+    } else { 
+      ESCkeyClick = false ;
+      DialogChekGameSetings.close();
+    }    
     }  //localStorage.clear();
- } 
-
-
-  
-    
-
+} 
 
 function update() {
-    if ( pause == true ){
+  if ( pause == true ){
        
-timer++;
+    timer++;
 
-if ( timer % 1000 == 0 ) {
-   lvlUP_a++;
-   if ( lvlUP_a == 100 ) {
-    lvlUP_a = lvlUP_a - 1;
-    lvlUP_b++;
-    if ( lvlUP_b == 100 ) {
-        lvlUP_b = lvlUP_b - 1;
-        lvlUP_c++; 
-        if ( lvlUP_c == 100 ) {
+    if ( timer % 1000 == 0 ) {
+      lvlUP_a++;
+      if ( lvlUP_a == 100 ) {
+        lvlUP_a = lvlUP_a - 1;
+        lvlUP_b++;
+        if ( lvlUP_b == 100 ) {
+          lvlUP_b = lvlUP_b - 1;
+          lvlUP_c++; 
+          if ( lvlUP_c == 100 ) {
             lvlUP_c = lvlUP_c - 1;
             lvlUP_d++;
             if ( lvlUP_d == 100 ) {
-                lvlUP_d = lvlUP_d - 1;
-                
-                
-               }
-           }       
-       }
-   }
-}
-if ( timer % 100 == 0 ) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
+              lvlUP_d = lvlUP_d - 1;   
+            }
+          }       
+        }
+      }
+    }
+
+  if ( timer % 100 == 0 ) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
     //console.log(timer,'a', lvlUP_a);
-    posNelep.push( /* Добавить объект для адекватного отображения Нелепых*/{
-        x: Math.floor(Math.random() * (canvas.width - widthNelep))  ,
-        y: -heightNelep, 
-        dx: 0, 
-        dy: 1,//Math.floor(Math.random() * lvlUP_a/10 + 2), 
-        del: 0,
-        w: widthNelep,  //размер  нелепых
-        h: heightNelep, //размер  нелепых
-        hp: 0,
-        damage: 0,
-       });
-       if ( timer % (100 - lvlUP_b) == 0 && lvlUP_b !== 0) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
-       // console.log(timer, 'b',lvlUP_b);
-        posNelep.push({
+    posNelep.push({
+      x: Math.floor(Math.random() * (canvas.width - widthNelep))  ,
+      y: -heightNelep, 
+      dx: 0, 
+      dy: speedNelep,//Math.floor(Math.random() * lvlUP_a/10 + 2), 
+      del: 0,
+      w: widthNelep,  //размер  нелепых
+      h: heightNelep, //размер  нелепых
+      hp: hpNelep,
+      damage: damageNelep,
+      kolvo: kolvoNelep,
+      });
+        if ( timer % (100 - lvlUP_b) == 0 && lvlUP_b !== 0) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
+          // console.log(timer, 'b',lvlUP_b);
+          posNelep.push({
             x: Math.floor(Math.random() * (canvas.width - widthNelep))  ,
             y: -heightNelep, 
             dx: 0, 
-            dy: Math.random() * lvlUP_b / 10 + 2, 
+            dy: speedNelep, //Math.random() * lvlUP_b / 10 + 2, 
             del: 0,
             w: widthNelep, //размер  нелепых
             h: heightNelep, //размер  нелепых
-            hp: 0,
-            damage: 0,
-           });
-           if ( timer % (100 - lvlUP_c) == 0  && lvlUP_c !== 0) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
-           // console.log(timer,'c', lvlUP_c);
-            posNelep.push({
+            hp: hpNelep,
+            damage: damageNelep,
+            kolvo: kolvoNelep,
+            });
+            if ( timer % (100 - lvlUP_c) == 0  && lvlUP_c !== 0) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
+            // console.log(timer,'c', lvlUP_c);
+              posNelep.push({
                 x: Math.floor(Math.random() * (canvas.width - widthNelep))  ,
                 y: -heightNelep, 
                 dx: 0, 
-                dy: Math.floor(Math.random() * lvlUP_c / 10 + 2), 
+                dy: speedNelep, //Math.floor(Math.random() * lvlUP_c / 10 + 2), 
                 del: 0,
                 w: widthNelep, //размер  нелепых
                 h: heightNelep, //размер  нелепых
-                hp: 0,
-                damage: 0,
-               });
-               if ( timer % (100 - lvlUP_d) == 0  && lvlUP_d !== 0) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
-               // console.log(timer, 'd',lvlUP_d);
+                hp: hpNelep,
+                damage: damageNelep,
+                kolvo: kolvoNelep,
+                });
+              if ( timer % (100 - lvlUP_d) == 0  && lvlUP_d !== 0) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
+                // console.log(timer, 'd',lvlUP_d);
                 posNelep.push({
                     x: Math.floor(Math.random() * (canvas.width - widthNelep))  ,
                     y: -heightNelep, 
                     dx: 0, 
-                    dy: Math.random() * lvlUP_d / 10 + 2, 
+                    dy: speedNelep, // Math.random() * lvlUP_d / 10 + 2, 
                     del: 0,
                     w: widthNelep, //размер  нелепых
                     h: heightNelep, //размер  нелепых
-                    hp: 0,
-                    damage: 0,
-                   });      
+                    hp: hpNelep,
+                    damage: damageNelep,
+                    kolvo: kolvoNelep,
+                    });      
             }              
         }      
     }     
-}
+  }
 
-if ( timer % 10 == 0 ) {
+  if ( timer % 10 == 0 ) {
     bullet.push({
-        x: ship.x + ship.w / 2 - widthBullet / 2,
-        y: ship.y - heightBullet, 
-        dx: 0, 
-        dy: -1, 
-        w: widthBullet, //размер пули
-        h: heightBullet, //размер пули
-        damage: 0,
-       });
-}
+      x: ship.x + ship.w / 2 - widthBullet / 2,
+      y: ship.y - heightBullet, 
+      dx: 0, 
+      dy: -1, 
+      w: widthBullet, //размер пули
+      h: heightBullet, //размер пули
+      damage: 0,
+      });
+  }
 
 //физика
-for ( i in bullet) {
-bullet[i].x = bullet[i].x + bullet[i].dx; 
-bullet[i].y = bullet[i].y + bullet[i].dy; 
-if ( bullet[i].y < -bullet[i].h) {bullet.splice(i, 1)};
-}
+  for ( i in bullet) {
+    bullet[i].x = bullet[i].x + bullet[i].dx; 
+    bullet[i].y = bullet[i].y + bullet[i].dy; 
+    if ( bullet[i].y < -bullet[i].h) {bullet.splice(i, 1)};
+  }
 
 for ( i in  posNelep ) {
 
@@ -325,7 +376,8 @@ for ( j in bullet ) {
         //console.log(`bullet[${j}] ${bullet[j].x} : ${bullet[j].y}`); //---Math.abs(posNelep[i].x + 25 - bullet[j].x + 10) < 25
     if ( posNelep[i].x < bullet[j].x + bullet[j].w &&
          posNelep[i].x + posNelep[i].w > bullet[j].x &&
-         posNelep[i].y + posNelep[i].h -5 > bullet[j].y ) {
+         posNelep[i].y + posNelep[i].h -5 > bullet[j].y &&
+         posNelep[i].y < bullet[j].y + bullet[j].h ) { 
         // console.log(`posNelep[i] ${posNelep[i].x} : ${posNelep[i].y}`);
         // console.log(`bullet[j] ${bullet[j].x} : ${bullet[j].y}`);
         
@@ -337,9 +389,26 @@ for ( j in bullet ) {
         bullet.splice(j, 1); 
         break;       
     }
+
+    if ( posNelep[i].x < ship.x + ship.w &&
+      posNelep[i].x + posNelep[i].w > ship.x &&
+      posNelep[i].y + posNelep[i].h > ship.y &&
+      posNelep[i].y < ship.y + ship.h ) { 
+        pause = false;
+        DialogPaused.show();
+        DialogGameOver.show();
+      }
 }
 
-if ( posNelep[i].del == 1 || posNelep[i].y > canvas.height ) {posNelep.splice(i, 1)}
+if ( posNelep[i].del == 1 || posNelep[i].y > canvas.height ) {
+  
+  if ( posNelep[i].y + posNelep[i].h > canvas.height ) {
+    pause = false;
+    DialogPaused.show();
+    DialogGameOver.show();
+  }
+  posNelep.splice(i, 1);
+}
 
 
 }
@@ -353,11 +422,11 @@ function render() {
     }else{/* Добавить картинку для обычного курсора или восстановить видимость дефолтного курсора */}
     
 
-    for ( i in  bullet) {
+    for ( i in bullet) {
         ctx.drawImage(bulletImg, bullet[i].x, bullet[i].y,  bullet[i].w,  bullet[i].h);
         }
 
-    for ( i in  posNelep) {
+    for ( i in posNelep) {
          ctx.drawImage(arrNelep[i%4], posNelep[i].x, posNelep[i].y, posNelep[i].w, posNelep[i].h);
     }
 }

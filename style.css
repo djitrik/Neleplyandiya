@@ -91,10 +91,11 @@ canvas {
 }
 
 .DialogGame {  
-    width: 480px;
-    height: 640px;
+    
     padding: 0px;  
-    border: 0px;   
+    border: 0px;
+    min-height: 100px;
+    min-width: 100px;   
 }
 
 .DialogPaused {
@@ -218,6 +219,37 @@ canvas {
 }
 
 .DialogChek:hover {
+    box-shadow:         0 0 20px #22a2b9;
+    -moz-box-shadow:    0 0 20px #22a2b9;
+    -o-box-shadow:      0 0 20px #22a2b9;
+    -ms-box-shadow:     0 0 20px #22a2b9;
+    -webkit-box-shadow: 0 0 20px #22a2b9; 
+}
+
+#labelPidor{
+    width: 100%;
+    height: 30px;
+   
+    background-color: rgba(26, 115, 123, 0.993);
+    font-size: 90%; 
+    padding-left: 5px;
+}
+
+.btnGameOver{
+    display:block;
+    margin-right: 0px;
+    margin-top: 10px;
+    width: 100%;
+    height: 30%;
+    border-radius: 20px;
+    background-color: rgba(26, 115, 123, 0.993);
+    font-size: 90%; 
+    padding-left: 5px;
+}
+
+
+
+.btnGameOver:hover {
     box-shadow:         0 0 20px #22a2b9;
     -moz-box-shadow:    0 0 20px #22a2b9;
     -o-box-shadow:      0 0 20px #22a2b9;
