@@ -51,6 +51,49 @@ let damageBullet = 0;
 
 let widthShip = 40;
 let heightShip = 40;
+let gun = 1;
+
+
+let lvlUP = 0;
+let lvlUP_a = 0;
+let lvlUP_b = 0;
+let lvlUP_c = 0;
+let lvlUP_d = 0;
+
+let RateOfFire = 1;         // Скорострельность
+let SpeedBull = -1;          // Скорость пуль
+let Damage = 1;             // Урон
+let Ricochet = 0;           // Рикошет
+let Reloading = 30;         // Время перезарядки
+let NumberOfBullets = 10;   // Количество патронов
+let GUN = 1;                // Двойная пушка
+let Drone = 0;              // Дроны
+let HP = 1;                 // Жизни
+let hpRegeneration = 0;     // Регенерация ХП
+let shieldRegeneration = 0; // Щит
+let shield = 0;             // Регенерация щита
+let DroneDamage = 0;        // Дроны урон
+let DroneReloading = 30;    // Дроны перезарядка
+let DroneNumberOfBullets = 10;  // Дроны кол-во патронов
+let DroneGUN = 0;           // Дроны двойная пушка
+
+let RateOfFireBuy = 1;// Скорострельность
+let SpeedBullBuy = 1;// Скорость пуль
+let DamageBuy = 1;// Урон
+let RicochetBuy = 1;// Рикошет
+let ReloadingBuy = 1;// Время перезарядки
+let NumberOfBulletsBuy = 1;// Количество патронов
+let GUNBuy = 1;// Двойная пушка
+let DroneBuy = 1;// Дроны
+let HPBuy = 1;// Жизни
+let hpRegenerationBuy = 1;// Регенерация ХП
+let shieldRegenerationBuy = 1;// Щит
+let shieldBuy = 1;// Регенерация щита
+let DroneDamageBuy = 1;// Дроны урон
+let DroneReloadingBuy = 1;// Дроны перезарядка
+let DroneNumberOfBulletsBuy = 1;// Дроны кол-во патроно
+let DroneGUNBuy = 1;// Дроны двойная пушка
+
 let ship = {
   x:canvas.width / 2 - widthShip / 2,
   y:canvas.height - heightShip - 20,
@@ -58,18 +101,12 @@ let ship = {
   animY:0,
   w: widthShip, //ширина корабля
   h: heightShip, //высота корабля
-  hp: 0,
-  sheet: 0,
-  hpsec: 0,
-  bulletK: 0,
-  bulletSpeed: 0,
+  hp: HP,
+  shield: 0,
+  hpsec: hpRegeneration,
+  bulletK: NumberOfBullets,
+  bulletSpeed: RateOfFire,
 };
-
-let lvlUP = 0;
-let lvlUP_a = 0;
-let lvlUP_b = 0;
-let lvlUP_c = 0;
-let lvlUP_d = 0;
 
 
 let user = [];
@@ -79,6 +116,7 @@ let thisUser = {
  password: 'password',
  score: 0,
  LVL: 1,
+ money: 0,
 
 }
 
@@ -100,22 +138,289 @@ function newGame(){
   document.getElementById('UserScore').innerHTML = `Score: ${thisUser.score}`;
   bullet.length = 0;
   posNelep.length = 0;
+  timer = 0;
        
 
 }
-
+hpNelep = 1;
 function straf(){
 
-  thisUser.score = thisUser.score - 10; //Изменить на переменную
+  thisUser.money = Math.floor(thisUser.money /100 * 90); //Изменить на переменную
 
-  document.getElementById('UserScore').innerHTML = `Score: ${thisUser.score}`;
+  document.getElementById('UserMoney').innerHTML = `Деньги: ${thisUser.money}`;
 
   bullet.length = 0;
   posNelep.length = 0;
+  timer = 0;
+  lvlUP_a = 0;
+  lvlUP_b = 0;
+  lvlUP_c = 0;
+  lvlUP_d = 0;
 }
 
+function btnBUY(){
+  btnRateOfFire.onclick = () => { //+
+    RateOfFire++;
+    
+    thisUser.money = thisUser.money - RateOfFireBuy;
+    RateOfFireBuy = RateOfFireBuy + 1;
+}
+
+btnSpeedBull.onclick = () => { //+
+  SpeedBull--;
+  
+  thisUser.money = thisUser.money - SpeedBullBuy;
+  SpeedBullBuy = SpeedBullBuy + 1;
+}
+
+btnDamage.onclick = () => { //+
+  Damage++;
+  
+  thisUser.money = thisUser.money - DamageBuy;
+  DamageBuy = DamageBuy + 1;
+}
+
+btnRicochet.onclick = () => { //Добавить сколько будет жить пуля(столкновения)
+  Ricochet++;                 //Добавить потерю урона при столкновении
+  
+  thisUser.money = thisUser.money - RicochetBuy;
+  RicochetBuy = RicochetBuy + 10;
+}
+
+btnReloading.onclick = () => {
+  Reloading++;
+  
+  thisUser.money = thisUser.money - ReloadingBuy;
+  ReloadingBuy = ReloadingBuy + 10;
+}
+
+btnNumberOfBullets.onclick = () => {
+  NumberOfBullets++;
+  
+  thisUser.money = thisUser.money - NumberOfBullets;
+  NumberOfBullets = NumberOfBullets + 10;
+}
+
+btnGUN.onclick = () => { //+
+  GUN++;
+  
+  thisUser.money = thisUser.money - GUNBuy;
+  GUNBuy = GUNBuy + 10;
+}
+
+btnDrone.onclick = () => {
+  Drone++;
+  
+  thisUser.money = thisUser.money - DroneBuy;
+  DroneBuy = DroneBuy + 10;
+}
+
+btnHP.onclick = () => {
+  HP++;
+  
+  thisUser.money = thisUser.money - HPBuy;
+  HPBuy = HPBuy + 10;
+}
+
+btnhpRegeneration.onclick = () => {
+  hpRegeneration++;
+  
+  thisUser.money = thisUser.money - hpRegenerationBuy;
+  hpRegenerationBuy = hpRegenerationBuy + 10;
+}
+
+btnshieldRegeneration.onclick = () => {
+  shieldRegeneration++;
+  
+  thisUser.money = thisUser.money - shieldRegenerationBuy;
+  shieldRegenerationBuy = shieldRegenerationBuy + 10;
+}
+
+btnshield.onclick = () => {
+  shield++;
+  
+  thisUser.money = thisUser.money - shieldBuy;
+  shieldBuy = shieldBuy + 10;
+}
+
+btnDroneDamage.onclick = () => {
+  DroneDamage++;
+  
+  thisUser.money = thisUser.money - DroneDamageBuy;
+  DroneDamageBuy = DroneDamageBuy + 10;
+}
+
+btnDroneReloading.onclick = () => {
+  DroneReloading++;
+  
+  thisUser.money = thisUser.money - DroneReloadingBuy;
+  DroneReloadingBuy = DroneReloadingBuy + 10;
+}
+
+btnDroneNumberOfBullets.onclick = () => {
+  DroneNumberOfBullets++;
+  
+  thisUser.money = thisUser.money - DroneNumberOfBulletsBuy;
+  DroneNumberOfBulletsBuy = DroneNumberOfBulletsBuy + 10;
+}
+
+btnDroneGUN.onclick = () => {
+  DroneGUN++;
+  
+  thisUser.money = thisUser.money - DroneGUNBuy;
+  DroneGUNBuy = DroneGUNBuy + 10;
+}
+
+
+
+}
 function activParam() {
-document.getElementById('ParamHeightShip').value = ship.h;
+  
+  document.getElementById('btnRateOfFire').innerHTML = `Скорострельность <br> Ур. ${RateOfFire} Стоим. (${RateOfFireBuy})`;
+  
+  if (thisUser.money < RateOfFireBuy){
+    document.getElementById('btnRateOfFire').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnRateOfFire').removeAttribute('disabled') 
+  }
+  
+  document.getElementById('btnSpeedBull').innerHTML = `Скорость пуль <br> Ур. ${SpeedBull} Стоим. (${SpeedBullBuy})`;
+  if (thisUser.money < SpeedBullBuy){
+    document.getElementById('btnSpeedBull').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnSpeedBull').removeAttribute('disabled') 
+  }
+  
+
+  document.getElementById('btnDamage').innerHTML = `Урон <br> Ур. ${Damage} Стоим. (${DamageBuy})`;
+  
+
+  if (thisUser.money < DamageBuy){
+    document.getElementById('btnDamage').setAttribute('disabled', true);;
+   } else {
+    document.getElementById('btnDamage').removeAttribute('disabled') 
+  }
+
+  document.getElementById('btnRicochet').innerHTML = `Рикошет  <br> Ур. ${Ricochet} Стоим. (${RicochetBuy})`;
+  
+
+  if (thisUser.money < RicochetBuy){
+    document.getElementById('btnRicochet').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnRicochet').removeAttribute('disabled') 
+  }
+
+  document.getElementById('btnReloading').innerHTML = `Время перезарядки <br> Ур. ${Reloading} Стоим. (${ReloadingBuy})`;
+  
+  if (thisUser.money < ReloadingBuy){
+    document.getElementById('btnReloading').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnReloading').removeAttribute('disabled') 
+  }
+
+  document.getElementById('btnNumberOfBullets').innerHTML = `Количество патронов <br> Кол-во: ${NumberOfBullets} Стоим. (${NumberOfBulletsBuy})`;
+ 
+  if (thisUser.money < NumberOfBulletsBuy){
+    document.getElementById('btnNumberOfBullets').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnNumberOfBullets').removeAttribute('disabled') 
+  }
+
+  document.getElementById('btnGUN').innerHTML = `Двойная пушка <br> Ур. ${GUN} Стоим. (${GUNBuy})`;
+  
+  if (thisUser.money < GUNBuy || GUN > 2){
+    document.getElementById('btnGUN').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnGUN').removeAttribute('disabled') 
+  }
+
+  document.getElementById('btnDrone').innerHTML = `Дроны <br> Ур. ${Drone} Стоим. (${DroneBuy})`;
+ 
+
+  if (thisUser.money < DroneBuy ){
+    document.getElementById('btnDrone').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnDrone').removeAttribute('disabled') 
+  }
+
+  document.getElementById('btnHP').innerHTML = `Жизни <br> Ур. ${HP} Стоим. (${HPBuy})`;
+  
+
+  if (thisUser.money < HPBuy){
+    document.getElementById('btnHP').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnHP').removeAttribute('disabled') 
+  }
+
+  document.getElementById('btnhpRegeneration').innerHTML = `Регенерация ХП <br> Ур. ${hpRegeneration} Стоим. (${hpRegenerationBuy})`;
+  
+
+  if (thisUser.money < hpRegenerationBuy){
+    document.getElementById('btnhpRegeneration').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnhpRegeneration').removeAttribute('disabled') 
+  }
+
+  document.getElementById('btnshieldRegeneration').innerHTML = `Щит <br> Ур. ${shieldRegeneration} Стоим. (${shieldRegenerationBuy})`;
+  
+
+  if (thisUser.money < shieldRegenerationBuy){
+    document.getElementById('btnshieldRegeneration').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnshieldRegeneration').removeAttribute('disabled') 
+  }
+
+  document.getElementById('btnshield').innerHTML = `Регенерация щита <br> Ур. ${shield} Стоим. (${shieldBuy})`;
+  
+
+  if (thisUser.money < shieldBuy){
+    document.getElementById('btnshield').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnshield').removeAttribute('disabled') 
+  }
+
+  document.getElementById('btnDroneDamage').innerHTML = `Дроны урон <br> Ур. ${DroneDamage} Стоим. (${DroneDamageBuy})`;
+  
+
+  if (thisUser.money < DroneDamageBuy){
+    document.getElementById('btnDroneDamage').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnDroneDamage').removeAttribute('disabled') 
+  }
+
+  document.getElementById('btnDroneReloading').innerHTML = `Дроны перезарядка <br> Ур. ${DroneReloading} Стоим. (${DroneReloadingBuy})`;
+  
+
+  if (thisUser.money < DroneReloadingBuy){
+    document.getElementById('btnDroneReloading').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnDroneReloading').removeAttribute('disabled') 
+  }
+
+  document.getElementById('btnDroneNumberOfBullets').innerHTML = `Дроны кол-во патронов<br> Ур. ${DroneNumberOfBullets} Стоим. (${DroneNumberOfBulletsBuy})`;
+  
+
+  if (thisUser.money < DroneNumberOfBulletsBuy){
+    document.getElementById('btnDroneNumberOfBullets').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnDroneNumberOfBullets').removeAttribute('disabled') 
+  }
+
+  document.getElementById('btnDroneGUN').innerHTML = `Дроны двойная пушка<br> Ур. ${DroneGUN} Стоим. (${DroneGUNBuy})`;
+  
+
+  if (thisUser.money < DroneGUNBuy){
+    document.getElementById('btnDroneGUN').setAttribute('disabled', true);
+   } else {
+    document.getElementById('btnDroneGUN').removeAttribute('disabled') 
+  }
+
+
+
+
+
+
+
 document.getElementById('ParamWidthShip').value = ship.w;
 document.getElementById('ParamHPShip').value = ship.hp;
 document.getElementById('ParamSheetShip').value = ship.sheet;
@@ -141,7 +446,7 @@ function btnbtn() {
     ship.h  =           document.getElementById('ParamHeightShip').value;
     ship.w =            document.getElementById('ParamWidthShip').value;
     ship.hp =           document.getElementById('ParamHPShip').value;
-    ship.sheet =        document.getElementById('ParamSheetShip').value;
+    ship.shield =        document.getElementById('ParamSheetShip').value;
     ship.hpsec =        document.getElementById('ParamHPsecShip').value;
     ship.bulletK =      document.getElementById('ParamBulletKShip').value;
     ship.bulletSpeed =  document.getElementById('ParamSpeedAttackShip').value;
@@ -232,6 +537,11 @@ function game(){
   render();
   requestAnimFrame(game);
   btnbtn();
+  activParam();
+  btnBUY();
+  document.getElementById('UserScore').innerHTML = `Очки: ${thisUser.score}`;
+  document.getElementById('UserLVL').innerHTML = `Уровень: ${thisUser.LVL}`;
+  document.getElementById('UserMoney').innerHTML = `Деньги: ${thisUser.money}`;
 }
 
 function direction(event){                              //Нажатие клавиш
@@ -260,8 +570,8 @@ function update() {
   if ( pause == true ){
        
     timer++;
-
-    if ( timer % 1000 == 0 ) {
+    if (timer % 5000 == 0){thisUser.LVL++}
+    if ( timer % 200 == 0 ) {
       lvlUP_a++;
       if ( lvlUP_a == 100 ) {
         lvlUP_a = lvlUP_a - 1;
@@ -280,7 +590,12 @@ function update() {
       }
     }
 
-  if ( timer % 100 == 0 ) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
+// Нелепые  Нелепые Нелепые Нелепые Нелепые Нелепые
+// Нелепые  Нелепые Нелепые Нелепые Нелепые Нелепые
+// Нелепые  Нелепые Нелепые Нелепые Нелепые Нелепые
+// Нелепые  Нелепые Нелепые Нелепые Нелепые Нелепые
+
+  if ( timer % (100 - lvlUP_a) == 0 ) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
     //console.log(timer,'a', lvlUP_a);
     posNelep.push({
       x: Math.floor(Math.random() * (canvas.width - widthNelep))  ,
@@ -340,18 +655,55 @@ function update() {
         }      
     }     
   }
+  // Нелепые  Нелепые Нелепые Нелепые Нелепые Нелепые
+  // Нелепые  Нелепые Нелепые Нелепые Нелепые Нелепые
+  // Нелепые  Нелепые Нелепые Нелепые Нелепые Нелепые
+// Нелепые  Нелепые Нелепые Нелепые Нелепые Нелепые
 
-  if ( timer % 10 == 0 ) {
+
+
+  // Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули
+  // Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули
+  // Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули
+  if ( timer % (100 - RateOfFire )  == 0 ) {
+    if ( GUN == 1 || GUN == 3){ 
     bullet.push({
       x: ship.x + ship.w / 2 - widthBullet / 2,
       y: ship.y - heightBullet, 
       dx: 0, 
-      dy: -1, 
+      dy: SpeedBull, 
       w: widthBullet, //размер пули
       h: heightBullet, //размер пули
-      damage: 0,
+      damage: Damage,
       });
+    }
+    if ( GUN == 2 || GUN == 3){ 
+
+      bullet.push({
+        x: ship.x + ship.w / 2 - widthBullet / 2,
+        y: ship.y - heightBullet, 
+        dx: 0.1, 
+        dy: SpeedBull, 
+        w: widthBullet, //размер пули
+        h: heightBullet, //размер пули
+        damage: Damage,
+        });
+
+        bullet.push({
+          x: ship.x + ship.w / 2 - widthBullet / 2,
+          y: ship.y - heightBullet, 
+          dx: -0.1, 
+          dy: SpeedBull, 
+          w: widthBullet, //размер пули
+          h: heightBullet, //размер пули
+          damage: Damage,
+          });
+        }
   }
+  // Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули
+  // Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули
+  // Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули
+
 
 //физика
   for ( i in bullet) {
@@ -382,31 +734,40 @@ for ( j in bullet ) {
         // console.log(`bullet[j] ${bullet[j].x} : ${bullet[j].y}`);
         
 
-        thisUser.score++;
+        //thisUser.score++;
        // console.log(thisUser.score);
-        document.getElementById('UserScore').innerHTML = `Score: ${thisUser.score}`;
-        posNelep[i].del = 1;
+        
+        posNelep[i].del = posNelep[i].del + 1;
         bullet.splice(j, 1); 
         break;       
     }
 
-    if ( posNelep[i].x < ship.x + ship.w &&
-      posNelep[i].x + posNelep[i].w > ship.x &&
-      posNelep[i].y + posNelep[i].h > ship.y &&
-      posNelep[i].y < ship.y + ship.h ) { 
-        pause = false;
-        DialogPaused.show();
-        DialogGameOver.show();
-      }
+    
 }
 
-if ( posNelep[i].del == 1 || posNelep[i].y > canvas.height ) {
+if ( posNelep[i].x < ship.x + ship.w &&
+  posNelep[i].x + posNelep[i].w > ship.x &&
+  posNelep[i].y + posNelep[i].h > ship.y &&
+  posNelep[i].y < ship.y + ship.h ) { 
+    pause = false;
+    DialogPaused.show();
+    DialogGameOver.show();
+  }
+
+if ( posNelep[i].del == posNelep[i].hp  ) {
   
   if ( posNelep[i].y + posNelep[i].h > canvas.height ) {
     pause = false;
     DialogPaused.show();
     DialogGameOver.show();
   }
+  
+  thisUser.score++;
+  thisUser.money = thisUser.money + 1;
+
+  
+  
+  
   posNelep.splice(i, 1);
 }
 
@@ -428,7 +789,17 @@ function render() {
 
     for ( i in posNelep) {
          ctx.drawImage(arrNelep[i%4], posNelep[i].x, posNelep[i].y, posNelep[i].w, posNelep[i].h);
-    }
+         ctx.beginPath();
+         ctx.fillStyle = "red";
+         ctx.fillRect(posNelep[i].x, posNelep[i].y + posNelep[i].h, posNelep[i].w, 5);
+         ctx.closePath();
+         ctx.beginPath();
+         ctx.fillStyle = "green";
+         ctx.fillRect(posNelep[i].x, posNelep[i].y + posNelep[i].h, posNelep[i].w - posNelep[i].del * posNelep[i].w / hpNelep , 5);
+         ctx.closePath();
+         
+
+        }
 }
 
 let requestAnimFrame = (function() {
