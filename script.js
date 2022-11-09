@@ -33,7 +33,7 @@ let bulletImg = new Image();
 bulletImg.src = 'fire.jpg';
 
 let arrNelep = [nelep0, nelep1, nelep2, nelep3];
-let nelepNumber = Math.floor(Math.random() * 4);
+//let nelepNumber = Math.floor(Math.random() * 4);
 
 let posNelep = [];
 let widthNelep = 50;
@@ -106,6 +106,7 @@ let ship = {
   hpsec: hpRegeneration,
   bulletK: NumberOfBullets,
   bulletSpeed: RateOfFire,
+  rel: Reloading, 
 };
 
 
@@ -187,18 +188,19 @@ btnRicochet.onclick = () => { //Добавить сколько будет жи�
   RicochetBuy = RicochetBuy + 10;
 }
 
-btnReloading.onclick = () => {
-  Reloading++;
+btnReloading.onclick = () => { //  Время перезарядки
+  Reloading--;
   
   thisUser.money = thisUser.money - ReloadingBuy;
   ReloadingBuy = ReloadingBuy + 10;
+  ship.rel = 30 - Reloading;
 }
 
-btnNumberOfBullets.onclick = () => {
+btnNumberOfBullets.onclick = () => { //+ Количество патронов
   NumberOfBullets++;
   
-  thisUser.money = thisUser.money - NumberOfBullets;
-  NumberOfBullets = NumberOfBullets + 10;
+  thisUser.money = thisUser.money - NumberOfBulletsBuy;
+  NumberOfBulletsBuy = NumberOfBulletsBuy + 10;
 }
 
 btnGUN.onclick = () => { //+
@@ -277,8 +279,8 @@ btnDroneGUN.onclick = () => {
 function activParam() {
   
   document.getElementById('btnRateOfFire').innerHTML = `Скорострельность <br> Ур. ${RateOfFire} Стоим. (${RateOfFireBuy})`;
-  
-  if (thisUser.money < RateOfFireBuy){
+  if (RateOfFire == 99) {document.getElementById('btnRateOfFire').innerHTML = `Макс. Ур. <br> Ур. ${RateOfFire}`;}
+  if (thisUser.money < RateOfFireBuy || RateOfFire > 98){
     document.getElementById('btnRateOfFire').setAttribute('disabled', true);
    } else {
     document.getElementById('btnRateOfFire').removeAttribute('disabled') 
@@ -312,7 +314,9 @@ function activParam() {
 
   document.getElementById('btnReloading').innerHTML = `Время перезарядки <br> Ур. ${Reloading} Стоим. (${ReloadingBuy})`;
   
-  if (thisUser.money < ReloadingBuy){
+  if (thisUser.money < ReloadingBuy && Reloading > 1){ ////////////////////
+
+
     document.getElementById('btnReloading').setAttribute('disabled', true);
    } else {
     document.getElementById('btnReloading').removeAttribute('disabled') 
@@ -327,7 +331,8 @@ function activParam() {
   }
 
   document.getElementById('btnGUN').innerHTML = `Двойная пушка <br> Ур. ${GUN} Стоим. (${GUNBuy})`;
-  
+  if (GUN == 2) {document.getElementById('btnGUN').innerHTML = `Тройная пушка <br> Ур. ${GUN} Стоим. (${GUNBuy})`;}
+  if (GUN == 3) {document.getElementById('btnGUN').innerHTML = `Макс. Ур. <br> Ур. ${GUN}`;}
   if (thisUser.money < GUNBuy || GUN > 2){
     document.getElementById('btnGUN').setAttribute('disabled', true);
    } else {
@@ -544,6 +549,10 @@ function game(){
   document.getElementById('UserMoney').innerHTML = `Деньги: ${thisUser.money}`;
 }
 
+function ReloadingTime (){
+  ship.bulletK = NumberOfBullets;
+}
+
 function direction(event){                              //Нажатие клавиш
    
   if(event.keyCode == 32 /* Добавить проверку на нахождении в диалоге с игрой */){
@@ -570,6 +579,7 @@ function update() {
   if ( pause == true ){
        
     timer++;
+    document.getElementById('Timer').innerHTML = `Таймер: ${timer}`;
     if (timer % 5000 == 0){thisUser.LVL++}
     if ( timer % 200 == 0 ) {
       lvlUP_a++;
@@ -608,6 +618,7 @@ function update() {
       hp: hpNelep,
       damage: damageNelep,
       kolvo: kolvoNelep,
+      IMagG: Math.floor(Math.random() * 3.9)
       });
         if ( timer % (100 - lvlUP_b) == 0 && lvlUP_b !== 0) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
           // console.log(timer, 'b',lvlUP_b);
@@ -622,6 +633,7 @@ function update() {
             hp: hpNelep,
             damage: damageNelep,
             kolvo: kolvoNelep,
+            IMagG: Math.floor(Math.random() * 3.9)
             });
             if ( timer % (100 - lvlUP_c) == 0  && lvlUP_c !== 0) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
             // console.log(timer,'c', lvlUP_c);
@@ -636,6 +648,7 @@ function update() {
                 hp: hpNelep,
                 damage: damageNelep,
                 kolvo: kolvoNelep,
+                IMagG: Math.floor(Math.random() * 3.9)
                 });
               if ( timer % (100 - lvlUP_d) == 0  && lvlUP_d !== 0) { //if ( timer === 1/2 * Math.pow(lvlUP, 2)) {
                 // console.log(timer, 'd',lvlUP_d);
@@ -650,6 +663,7 @@ function update() {
                     hp: hpNelep,
                     damage: damageNelep,
                     kolvo: kolvoNelep,
+                    IMagG: Math.floor(Math.random() * 3.9)
                     });      
             }              
         }      
@@ -660,13 +674,18 @@ function update() {
   // Нелепые  Нелепые Нелепые Нелепые Нелепые Нелепые
 // Нелепые  Нелепые Нелепые Нелепые Нелепые Нелепые
 
+if (ship.bulletK == 0) {
+  setTimeout(ReloadingTime, ship.rel * 100);
+  ship.bulletK = -1;
+}
 
-
   // Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули
   // Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули
   // Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули  Пули
-  if ( timer % (100 - RateOfFire )  == 0 ) {
+  if ( timer % (100 - RateOfFire )  == 0 && ship.bulletK > 0) {
     if ( GUN == 1 || GUN == 3){ 
+      ship.bulletK--; //Тут Пули
+     // console.log(ship.bulletK)
     bullet.push({
       x: ship.x + ship.w / 2 - widthBullet / 2,
       y: ship.y - heightBullet, 
@@ -677,8 +696,8 @@ function update() {
       damage: Damage,
       });
     }
-    if ( GUN == 2 || GUN == 3){ 
-
+    if ( (GUN == 2 || GUN == 3) && ship.bulletK > 0){ 
+      ship.bulletK--;
       bullet.push({
         x: ship.x + ship.w / 2 - widthBullet / 2,
         y: ship.y - heightBullet, 
@@ -688,7 +707,8 @@ function update() {
         h: heightBullet, //размер пули
         damage: Damage,
         });
-
+        if ( ship.bulletK > 0 )
+        ship.bulletK--;
         bullet.push({
           x: ship.x + ship.w / 2 - widthBullet / 2,
           y: ship.y - heightBullet, 
@@ -763,7 +783,7 @@ if ( posNelep[i].del == posNelep[i].hp  ) {
   }
   
   thisUser.score++;
-  thisUser.money = thisUser.money + 1;
+  thisUser.money = thisUser.money + 100;
 
   
   
@@ -788,7 +808,7 @@ function render() {
         }
 
     for ( i in posNelep) {
-         ctx.drawImage(arrNelep[i%4], posNelep[i].x, posNelep[i].y, posNelep[i].w, posNelep[i].h);
+         ctx.drawImage(arrNelep[posNelep[i].IMagG], posNelep[i].x, posNelep[i].y, posNelep[i].w, posNelep[i].h);
          ctx.beginPath();
          ctx.fillStyle = "red";
          ctx.fillRect(posNelep[i].x, posNelep[i].y + posNelep[i].h, posNelep[i].w, 5);
